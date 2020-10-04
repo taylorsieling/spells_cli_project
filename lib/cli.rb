@@ -17,6 +17,12 @@ class CLI
         print_spells(class_spells)
         puts ""
         puts "Enter a number for the full spell details or enter 'exit' to exit."
+        puts ""
+        input = gets.strip.downcase
+        while input != "exit" do 
+            s = Spell.find_by_class_name(@class_name)[input.to_i - 1]
+            API.get_spell_details(s)
+        end
     end
 
     def print_spells(spells)
