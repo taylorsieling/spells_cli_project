@@ -6,7 +6,7 @@
 
 class Spell 
 
-    attr_accessor :name, :index_name, :class_name, :level, :school, :range
+    attr_accessor :name, :index_name, :class_name, :level, :casting_time, :range, :duration, :school, :desc, :components
     @@all = []
 
     def initialize(name:, index_name:, class_name:)
@@ -27,7 +27,7 @@ class Spell
         @@all.select { |sp| sp == spell }
     end
 
-    
+
     #search spells by school
     #search spells by level
     #search spells by dc/damage type

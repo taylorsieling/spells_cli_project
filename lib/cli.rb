@@ -47,13 +47,25 @@ class CLI
     def print_spell(spell)
         puts ""    
         puts "Spell: #{spell.name}"
-        puts "Level: #{spell.level}"
-        # puts "----------------"
-        # puts "Description: #{spell.desciption}"
-        # puts ""
-        # puts "School: #{spell.school}"
-        # puts ""
-        # puts "Classes: #{spell.classes}"
+        puts ""
+        puts "----------------"
+        puts ""
+        if spell.level == 0
+            puts "Level: Cantrip"
+        else
+            puts "Level: #{spell.level}"
+        end
+        puts "School: #{spell.school.values[1]}"
+        puts "Casting Time: #{spell.casting_time}"
+        puts "Range: #{spell.range}"
+        puts "Duration: #{spell.duration}"
+        puts "Components: #{spell.components.join(", ")}"
+        puts ""
+        puts "----------------"
+        puts ""
+        puts "Spell Description:"
+        puts ""
+        puts "#{spell.desc.join}"
     end
 
     def prompt
@@ -77,5 +89,13 @@ class CLI
         # s = 
         print_spell_list(ClassName.find_by_class_name(@class_name).spells)
     end
+
+    # def cantrip
+    #     if spell.level == 0
+    #         puts "Cantrip"
+    #     else
+    #         puts "Level: #{spell.level}"
+    #     end
+    # end
  
 end                                                                                            
