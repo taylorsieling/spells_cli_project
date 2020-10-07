@@ -6,13 +6,16 @@
 
 class Spell 
 
-    attr_accessor :name, :index_name, :class_name
+    attr_accessor :name, :index_name, :class_name, :level, :school, :range
     @@all = []
 
     def initialize(name:, index_name:, class_name:)
         @name = name
         @index_name = index_name
         @class_name = class_name
+        @level = level
+        @school = school
+        @range = range
         @@all << self
     end
     
@@ -20,10 +23,11 @@ class Spell
         @@all
     end
 
-    def self.find_by_class_name(class_name)
-        @@all.select {|spell| spell.class_name == class_name}
+    def self.find(spell)
+        @@all.select { |sp| sp == spell }
     end
 
+    
     #search spells by school
     #search spells by level
     #search spells by dc/damage type

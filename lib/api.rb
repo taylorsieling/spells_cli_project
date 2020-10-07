@@ -7,17 +7,21 @@ class API
         uri = URI(url)
         response = Net::HTTP.get(uri)
         spells = JSON.parse(response)["results"]
+        new_class = ClassName.new(class_name)
         spells.each do |spell|
-            Spell.new(name: spell["name"], index_name: spell["index"], class_name: class_name)
+            new_spell = Spell.new(name: spell["name"], index_name: spell["index"], class_name: class_name)
+            new_class.spells << new_spell
         end
+        # binding.pry
     end
+
 
     def self.get_spell_details(spell)
         url = "https://www.dnd5eapi.co/api/spells/#{spell.index_name}"
         uri = URI(url)
         response = Net::HTTP.get(uri)
-        spell = JSON.parse(response)
-        binding.pry
+        data = JSON.parse(response)
+        spell.level = data["level"]
     end
 
 end
