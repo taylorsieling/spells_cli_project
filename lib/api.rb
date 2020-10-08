@@ -12,7 +12,7 @@ class API
             new_spell = Spell.new(name: spell["name"], index_name: spell["index"], class_name: class_name)
             new_class.spells << new_spell
         end
-        binding.pry
+        # binding.pry
     end
 
 
@@ -30,16 +30,14 @@ class API
         spell.desc = data["desc"]
         spell.player_classes = data["classes"]
         # binding.pry
-
-        # "classes" - iterate over, just want class names
     end
 
-    # def self.get_player_class_list
-    #     url = "https://www.dnd5eapi.co/api/classes"
-    #     uri = URI(url)
-    #     response = Net::HTTP.get(uri)
-    #     data = JSON.parse(response)["results"]
-    #     binding.pry
-    # end
+    def self.get_character_class_list
+        url = "https://www.dnd5eapi.co/api/classes"
+        uri = URI(url)
+        response = Net::HTTP.get(uri)
+        class_list = JSON.parse(response)["results"]
+        # binding.pry
+    end
 
 end

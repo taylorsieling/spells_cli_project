@@ -79,22 +79,28 @@ class CLI
     def prompt
         puts ""
         puts "Enter a number to see the spell details!"
-        puts "To view another Player Class Spell List, enter 'class'."
+        puts "To view another character class spell list, enter 'class'."
         puts "To view the list again, enter 'list'."
         puts "Or, type 'exit' to exit the program." 
         puts ""
     end
 
     def prompt_player_class
+        class_list = API.get_character_class_list
+        list = class_list.each_with_object([]) { |h,a| a << h["name"] }
         puts ""
-        puts "Search for a spell by entering a Player Class!"
+        puts "Search for a spell by entering one of the following character classes:"
+        puts "#{list.join(", ")}"
         puts ""
         @class_name = gets.strip.downcase
         puts ""
         API.fetch_spells(@class_name)
         puts ""
-        print_spell_list(ClassName.find_by_class_name(@class_name).spells)
-        
+        if ClassName.find_by_class_name(@class_name).spells.empty?
+            puts "That class uses muscle instead of magic! Please try again!"
+            prompt_player_class
+        else
+            print_spell_list(ClassName.find_by_class_name(@class_name).spells)
+        end
     end
-
 end                                                                                            
