@@ -6,7 +6,7 @@
 
 class Spell 
 
-    attr_accessor :name, :index_name, :class_name, :level, :casting_time, :range, :duration, :school, :desc, :components
+    attr_accessor :name, :index_name, :class_name, :level, :casting_time, :range, :duration, :school, :desc, :components, :player_classes
     @@all = []
 
     def initialize(name:, index_name:, class_name:)
@@ -16,6 +16,7 @@ class Spell
         @level = level
         @school = school
         @range = range
+        @player_classes = []
         @@all << self
     end
     
@@ -26,6 +27,8 @@ class Spell
     def self.find(spell)
         @@all.select { |sp| sp == spell }
     end
+
+    # binding.pry
 
 
     #search spells by school

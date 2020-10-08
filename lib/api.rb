@@ -27,18 +27,19 @@ class API
         spell.range = data["range"]
         spell.duration = data["duration"]
         spell.components = data["components"]
-        
         spell.desc = data["desc"]
+        spell.player_classes = data["classes"]
         binding.pry
 
         # "classes" - iterate over, just want class names
-
-        # conditioning for cantrips
-        # if spell.level == 0
-        # puts "Cantrip"
-        # else
-        # spell.level
-
     end
+
+    # def self.get_player_class_list
+    #     url = "https://www.dnd5eapi.co/api/classes"
+    #     uri = URI(url)
+    #     response = Net::HTTP.get(uri)
+    #     player_classes = JSON.parse(response)["results"]
+    #     binding.pry
+    # end
 
 end

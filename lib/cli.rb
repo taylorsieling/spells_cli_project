@@ -55,6 +55,14 @@ class CLI
         else
             puts "Level: #{spell.level}"
         end
+
+        # # player_classes = spell.player_classes.map{|pc| pc[:name]}
+        # spell.player_classes.collect do |h| h[:name] 
+        #     # puts "Classes: #{}"
+        # end
+        # binding.pry
+        # # puts "Classes: #{spell.player_classes.map{|pc| pc[:name]}}"
+
         puts "School: #{spell.school.values[1]}"
         puts "Casting Time: #{spell.casting_time}"
         puts "Range: #{spell.range}"
@@ -66,6 +74,15 @@ class CLI
         puts "Spell Description:"
         puts ""
         puts "#{spell.desc.join}"
+    end
+
+    def print_player_classes
+        puts ""
+        puts "Here are the Player Classes:"
+        puts ""
+        API.get_player_class_list
+        puts player_classes
+        binding.pry
     end
 
     def prompt
@@ -90,12 +107,8 @@ class CLI
         print_spell_list(ClassName.find_by_class_name(@class_name).spells)
     end
 
-    # def cantrip
-    #     if spell.level == 0
-    #         puts "Cantrip"
-    #     else
-    #         puts "Level: #{spell.level}"
-    #     end
-    # end
- 
+    # To search by Player Class
+    # To search by Spell Name
+    # To search by School
+    # To search by Level
 end                                                                                            
