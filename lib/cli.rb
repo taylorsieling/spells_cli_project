@@ -96,11 +96,14 @@ class CLI
         puts ""
         API.fetch_spells(@class_name)
         puts ""
-        if ClassName.find_by_class_name(@class_name).spells.empty?
+        if list.include?("#{@class_name.capitalize}") == false
+            puts "Critical Fail! Please try again!"
+        elsif ClassName.find_by_class_name(@class_name).spells.empty?
             puts "That class uses muscle instead of magic! Please try again!"
             prompt_player_class
         else
             print_spell_list(ClassName.find_by_class_name(@class_name).spells)
         end
+        # binding.pry
     end
 end                                                                                            
