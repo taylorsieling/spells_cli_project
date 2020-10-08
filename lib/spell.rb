@@ -28,11 +28,4 @@ class Spell
         @@all.select { |sp| sp == spell }
     end
 
-    # binding.pry
-
-
-    #search spells by school
-    #search spells by level
-    #search spells by dc/damage type
-
 end

@@ -29,7 +29,7 @@ class API
         spell.components = data["components"]
         spell.desc = data["desc"]
         spell.player_classes = data["classes"]
-        binding.pry
+        # binding.pry
 
         # "classes" - iterate over, just want class names
     end
@@ -38,7 +38,7 @@ class API
     #     url = "https://www.dnd5eapi.co/api/classes"
     #     uri = URI(url)
     #     response = Net::HTTP.get(uri)
-    #     player_classes = JSON.parse(response)["results"]
+    #     data = JSON.parse(response)["results"]
     #     binding.pry
     # end
 
