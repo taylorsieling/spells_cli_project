@@ -2,12 +2,14 @@
 
 class API
 
+    attr_accessor :class_list
+
     def self.fetch_spells(class_name)
         url = "https://www.dnd5eapi.co/api/classes/#{class_name}/spells"
         uri = URI(url)
         response = Net::HTTP.get(uri)
         spells = JSON.parse(response)["results"]
-        new_class = ClassName.new(class_name)
+        new_class = CharacterClass.new(class_name)
         spells.each do |spell|
             new_spell = Spell.new(name: spell["name"], index_name: spell["index"], class_name: class_name)
             new_class.spells << new_spell
@@ -29,6 +31,8 @@ class API
         spell.components = data["components"]
         spell.desc = data["desc"]
         spell.player_classes = data["classes"]
+        spell.ritual = data["ritual"]
+        spell.concentration = data["concentration"]
         # binding.pry
     end
 
@@ -37,7 +41,6 @@ class API
         uri = URI(url)
         response = Net::HTTP.get(uri)
         class_list = JSON.parse(response)["results"]
-        # binding.pry
     end
 
 end

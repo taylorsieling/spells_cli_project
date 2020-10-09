@@ -1,6 +1,6 @@
 require 'pry'
 
-class ClassName
+class CharacterClass
 
     attr_accessor :name, :spells
     @@all = []
@@ -11,8 +11,7 @@ class ClassName
         @@all << self
     end 
 
-    def self.all
-        
+    def self.all 
         @@all
     end
 

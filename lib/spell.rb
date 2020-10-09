@@ -6,17 +6,13 @@
 
 class Spell 
 
-    attr_accessor :name, :index_name, :class_name, :level, :casting_time, :range, :duration, :school, :desc, :components, :player_classes
+    attr_accessor :name, :index_name, :class_name, :level, :casting_time, :range, :duration, :school, :desc, :components, :player_classes, :ritual, :concentration
     @@all = []
 
     def initialize(name:, index_name:, class_name:)
         @name = name
         @index_name = index_name
         @class_name = class_name
-        @level = level
-        @school = school
-        @range = range
-        @player_classes = []
         @@all << self
     end
     
