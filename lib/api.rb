@@ -15,7 +15,6 @@ class API
             new_spell = Spell.new(name: spell["name"], index_name: spell["index"], class_name: class_object)
             new_class.spells << new_spell
         end
-        # binding.pry
     end
 
     def self.get_spell_details(spell)
@@ -33,7 +32,6 @@ class API
         spell.character_classes = data["classes"]
         spell.ritual = data["ritual"]
         spell.concentration = data["concentration"]
-        # binding.pry
     end
 
     # got rid of character_class_list

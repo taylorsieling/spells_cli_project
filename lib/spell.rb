@@ -25,4 +25,5 @@ class Spell
     def self.find(spell)
         @@all.select { |sp| sp == spell }
     end
+    
 end
