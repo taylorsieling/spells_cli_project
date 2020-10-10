@@ -1,6 +1,7 @@
 # interactions with the user
 # contain all gets and puts
 # control the flow of our program
+
 require 'pry'
 
 class CLI
@@ -86,8 +87,8 @@ class CLI
     def prompt
         puts ""
         puts "Enter a number to see the spell details!"
-        puts "To view another character class spell list, enter 'class'."
         puts "To view the list again, enter 'list'."
+        puts "To view another character class spell list, enter 'class'."
         puts "Or, type 'exit' to exit the program." 
         puts ""
     end
@@ -98,36 +99,33 @@ class CLI
         
         puts ""
         puts "Search for a spell by entering one of the following character classes:"
-        puts "Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Warlock, Wizard"
+        puts classes.join(", ")
         puts ""
 
         # get character class input and fetch spells
-        #print spell list
 
         @class_name = gets.strip.downcase
         puts ""
         API.fetch_spells(@class_name)
         puts ""
         spells = CharacterClass.find_by_class_name(@class_name).spells
-        binding.pry
-        print_spells(spells)
 
+        # conditionals for typos/non-class input & non-casting classes
 
-        # print character class spells
-        # if class has been called before, print list
-        # if class has not been called, call API to retrieve list
+        if classes.include?("#{@class_name.capitalize}") == false
+            puts "Critical Fail! Please try again!"
+            prompt_player_class
+        elsif CharacterClass.find_by_class_name(@class_name).spells.empty?
+            puts "That class uses muscle instead of magic! Please try again!"
+            prompt_player_class
+        else 
+            print_spells(spells)
+        end
 
-        # binding.pry
-        # puts ""
-        # if list.include?("#{class_name.capitalize}") == false
-        #     puts "Critical Fail! Please try again!"
-        #     prompt_player_class
-        # # elsif CharacterClass.find_by_class_name(class_name).spells.empty?
-        # #     puts "That class uses muscle instead of magic! Please try again!"
-        # #     prompt_player_class
-        # else
-        #     print_spell_list(CharacterClass.find_by_class_name(class_name).spells)
-        # end
+    end
+
+    def classes
+        list = ["Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"]
     end
 
 end                                                                                            
