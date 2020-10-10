@@ -1,22 +1,22 @@
 # handle all of our API requests
 
+require 'pry'
+
 class API
 
-    attr_accessor :class_list
-
-    def self.fetch_spells(class_name)
-        url = "https://www.dnd5eapi.co/api/classes/#{class_name}/spells"
+    def self.fetch_spells(class_object)
+        url = "https://www.dnd5eapi.co/api/classes/#{class_object}/spells"
         uri = URI(url)
         response = Net::HTTP.get(uri)
-        spells = JSON.parse(response)["results"]
-        new_class = CharacterClass.new(class_name)
-        spells.each do |spell|
-            new_spell = Spell.new(name: spell["name"], index_name: spell["index"], class_name: class_name)
+
+        spell_list = JSON.parse(response)["results"]
+        new_class = CharacterClass.new(class_object)
+        spell_list.each do |spell|
+            new_spell = Spell.new(name: spell["name"], index_name: spell["index"], class_name: class_object)
             new_class.spells << new_spell
         end
         # binding.pry
     end
-
 
     def self.get_spell_details(spell)
         url = "https://www.dnd5eapi.co/api/spells/#{spell.index_name}"
@@ -30,17 +30,12 @@ class API
         spell.duration = data["duration"]
         spell.components = data["components"]
         spell.desc = data["desc"]
-        spell.player_classes = data["classes"]
+        spell.character_classes = data["classes"]
         spell.ritual = data["ritual"]
         spell.concentration = data["concentration"]
         # binding.pry
     end
 
-    def self.get_character_class_list
-        url = "https://www.dnd5eapi.co/api/classes"
-        uri = URI(url)
-        response = Net::HTTP.get(uri)
-        class_list = JSON.parse(response)["results"]
-    end
-
+    # got rid of character_class_list
+    # created class objects
 end

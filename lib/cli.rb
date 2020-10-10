@@ -1,6 +1,7 @@
 # interactions with the user
 # contain all gets and puts
 # control the flow of our program
+require 'pry'
 
 class CLI
 
@@ -12,7 +13,7 @@ class CLI
         input = gets.strip.downcase
         while input != 'exit' do
             if input == 'list' 
-                print_spell_list(CharacterClass.find_by_class_name(@class_name).spells)
+                print_spells(CharacterClass.find_by_class_name(@class_name).spells)
             elsif input.to_i > 0 && input.to_i <= CharacterClass.find_by_class_name(@class_name).spells.length
                 spell = CharacterClass.find_by_class_name(@class_name).spells[input.to_i - 1]
                 if !spell.level
@@ -34,14 +35,13 @@ class CLI
         puts ""
     end
 
-    def print_spell_list(spells)
+    def print_spells(spell)
         puts ""
-        puts "Here are the #{@class_name} spells:"
+        puts "Here are the #{@class_name.capitalize} spells:"
         puts ""
-        spells.each_with_index do | spell, i |
+        spell.each_with_index do | spell, i |
             puts "#{i+1}. #{spell.name}" 
         end
-        # binding.pry
     end
 
     def print_spell(spell)
@@ -50,14 +50,14 @@ class CLI
         puts ""  
         puts "Spell: #{spell.name}"
         puts ""
-        puts "   * * *   "
+        puts "   - - -    "
         puts ""
         if spell.level == 0
             puts "Level: Cantrip"
         else
             puts "Level: #{spell.level}"
         end
-        cl = spell.player_classes.each_with_object([]) { |h,a| a << h["name"] }
+        cl = spell.character_classes.each_with_object([]) { |h,a| a << h["name"] }
         puts "Classes: #{cl.join(", ")}" 
         puts "School: #{spell.school.values[1]}"
         puts "Casting Time: #{spell.casting_time}"
@@ -93,40 +93,41 @@ class CLI
     end
 
     def prompt_player_class
-        class_list = API.get_character_class_list
-        list = class_list.each_with_object([]) { |h,a| a << h["name"] 
+
+        # puts character classes
+        
         puts ""
         puts "Search for a spell by entering one of the following character classes:"
-        puts "#{list.join(", ")}"
+        puts "Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Warlock, Wizard"
         puts ""
+
+        # get character class input and fetch spells
+        #print spell list
+
         @class_name = gets.strip.downcase
         puts ""
         API.fetch_spells(@class_name)
         puts ""
-        if list.include?("#{@class_name.capitalize}") == false
-            puts "Critical Fail! Please try again!"
-            prompt_player_class
-        elsif CharacterClass.find_by_class_name(@class_name).spells.empty?
-            puts "That class uses muscle instead of magic! Please try again!"
-            prompt_player_class
-        else
-            print_spell_list(CharacterClass.find_by_class_name(@class_name).spells)
-        end
+        spells = CharacterClass.find_by_class_name(@class_name).spells
+        binding.pry
+        print_spells(spells)
 
-        # if CharacterClassList.all == []
-        #     class_list = API.get_character_class_list
-        #     list = class_list.each_with_object([]) { |h,a| a << h["name"] }
-        # else
-        #     CharacterClassList.print_class_list
-        # end
-        
+
+        # print character class spells
+        # if class has been called before, print list
+        # if class has not been called, call API to retrieve list
+
         # binding.pry
+        # puts ""
+        # if list.include?("#{class_name.capitalize}") == false
+        #     puts "Critical Fail! Please try again!"
+        #     prompt_player_class
+        # # elsif CharacterClass.find_by_class_name(class_name).spells.empty?
+        # #     puts "That class uses muscle instead of magic! Please try again!"
+        # #     prompt_player_class
+        # else
+        #     print_spell_list(CharacterClass.find_by_class_name(class_name).spells)
+        # end
     end
-
-    # def print_class_list
-    #     CharacterClassList.all
-    #     # l = list.each_with_object([]) { |h,a| a << h["name"] }
-    #     # puts "#{l.join(", ")}"
-    # end
 
 end                                                                                            
